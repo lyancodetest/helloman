@@ -1,0 +1,10 @@
+version=3.0.0-RELEASE
+nginxPort=80
+redisPort=8001
+serverPort=8081
+managePort=9091
+dubboPort=20881
+kafkaUrl=10.2.0.214:9092
+hostList="--net=host --add-host mysql.service:10.1.0.120 --add-host redis.service:10.1.0.123 --add-host redis-cluster.service:10.1.0.123 --add-host zookeeper.service:10.2.0.201 --add-host  hadoop2:10.2.0.212 --add-host  hadoop3:10.2.0.213 --add-host  hadoop4:10.2.0.214 --add-host hadoop5.wld.com:10.2.0.215 --add-host hadoop4.wld.com:10.2.0.214 --add-host hadoop3.wld.com:10.2.0.213 --add-host hadoop2.wld.com:10.2.0.212 --add-host hadoop1.wld.com:10.2.0.211 "
+repSqlUrl=10.2.0.34:80
+apolloConfig="-Denv=dev -Dapollo.cluster=default -Ddev_meta=http://10.2.0.34:8080"

@@ -1,0 +1,163 @@
+rocket2_v2_production=> \d users
+                                            Table "public.users"
+         Column          |            Type             |                     Modifiers                      
+-------------------------+-----------------------------+----------------------------------------------------
+ id                      | integer                     | not null default nextval('users_id_seq'::regclass)
+ mobile                  | character varying(255)      | not null default ''::character varying
+ encrypted_password      | character varying(255)      | not null default ''::character varying
+ reset_password_token    | character varying(255)      | 
+ reset_password_sent_at  | timestamp without time zone | 
+ sign_in_count           | integer                     | not null default 0
+ current_sign_in_at      | timestamp without time zone | 
+ last_sign_in_at         | timestamp without time zone | 
+ current_sign_in_ip      | character varying(255)      | 
+ last_sign_in_ip         | character varying(255)      | 
+ confirmed_at            | timestamp without time zone | 
+ failed_attempts         | integer                     | not null default 0
+ unlock_token            | character varying(255)      | 
+ locked_at               | timestamp without time zone | 
+ created_at              | timestamp without time zone | 
+ updated_at              | timestamp without time zone | 
+ authentication_token    | character varying(255)      | 
+ screen_name             | character varying(255)      | 
+ member_id               | character varying(255)      | not null
+ blocked                 | boolean                     | 
+ to_receive_newsletter   | boolean                     | 
+ email                   | character varying(255)      | 
+ email_confirmed         | timestamp without time zone | 
+ device_info             | character varying(255)      | 
+ encrypted_security_code | character varying(255)      | default ''::character varying
+ user_agent              | text                        | 
+ origin                  | character varying(255)      | 
+ agent                   | boolean                     | default false
+ referee_id              | integer                     | 
+ role_type               | integer                     | default 0
+ product_code            | character varying(255)      | 
+ channel_code            | character varying(255)      | 
+ sec_failed_attempts     | integer                     | default 0
+ invite_at               | timestamp without time zone | 
+ uuid                    | bigint                      | 
+ email_encrypt           | character varying(255)      | 
+ mobile_encrypt          | character varying(255)      | 
+Indexes:
+    "borrowers_pkey" PRIMARY KEY, btree (id)
+    "index_users_on_authentication_token" UNIQUE, btree (authentication_token)
+    "index_users_on_reset_password_token" UNIQUE, btree (reset_password_token)
+    "index_users_on_unlock_token" UNIQUE, btree (unlock_token)
+    "idx_u_createdat" btree (created_at)
+    "idx_u_mobile_en" btree (mobile_encrypt)
+    "idx_u_updatedat" btree (updated_at)
+    "idx_users_mobile_en" btree (mobile_encrypt) INVALID
+    "idx_users_roletype_agent_created_refereeid" btree (role_type, agent, created_at, referee_id)
+    "idx_users_uuid" btree (uuid)
+    "index_users_on_created_at_origin" btree (created_at, origin)
+    "index_users_on_mobile" btree (mobile)
+    "index_users_on_origin" btree (origin)
+    "index_users_on_referee_id" btree (referee_id)
+Triggers:
+    tr_users_mobile_update BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE update_mobile_users()
+    users_insert BEFORE INSERT ON users FOR EACH ROW EXECUTE PROCEDURE append_users_checkmask()
+    users_update BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE update_users_checkmask()
+
+rocket2_v2_production=> 
+rocket2_v2_production=> \d dues
+                                         Table "public.dues"
+       Column       |            Type             |                     Modifiers                     
+--------------------+-----------------------------+---------------------------------------------------
+ id                 | integer                     | not null default nextval('dues_id_seq'::regclass)
+ loan_id            | integer                     | 
+ index              | integer                     | 
+ amount             | numeric(8,2)                | 
+ due_date           | date                        | 
+ due_type           | character varying(255)      | 
+ created_at         | timestamp without time zone | 
+ updated_at         | timestamp without time zone | 
+ settled_amount     | numeric(8,2)                | default 0.0
+ org_id             | bigint                      | 
+ user_id            | bigint                      | 
+ application_id     | character varying(64)       | 
+ index_no           | integer                     | 
+ outstanding_amount | numeric(10,2)               | 
+Indexes:
+    "dues_pkey" PRIMARY KEY, btree (id)
+    "dues_on_application_id" btree (application_id)
+    "dues_on_user_id" btree (user_id)
+    "idx_d_createdat" btree (created_at)
+    "idx_d_updatedat" btree (updated_at)
+    "idx_dues_index" btree (index)
+    "idx_dues_loanid_duedate_type" btree (loan_id, due_date, due_type)
+    "idx_dues_loanid_duestype_date" btree (loan_id, due_type, due_date)
+    "idx_dues_loanid_index_type" btree (loan_id, index, due_type)
+    "idx_dues_type_date" btree (due_type, due_date)
+Triggers:
+    logdel_insert AFTER DELETE ON dues FOR EACH ROW EXECUTE PROCEDURE logdel_dues()
+rocket2_v2_production=> \d documents
+                                           Table "public.documents"
+        Column         |            Type             |                       Modifiers                        
+-----------------------+-----------------------------+--------------------------------------------------------
+ id                    | integer                     | not null default nextval('documents_id_seq'::regclass)
+ documentable_id       | integer                     | 
+ documentable_type     | character varying(255)      | 
+ doc_type              | character varying(255)      | 
+ resource_file_name    | character varying(255)      | 
+ resource_content_type | character varying(255)      | 
+ resource_file_size    | integer                     | 
+ resource_updated_at   | timestamp without time zone | 
+ created_at            | timestamp without time zone | 
+ updated_at            | timestamp without time zone | 
+ access_token          | character varying(255)      | 
+ hidden                | boolean                     | default false
+ index                 | integer                     | default 1
+ application_name      | character varying(50)       | 
+ watermark             | integer                     | 
+ thumbnail             | integer                     | 
+ deleted_at            | timestamp without time zone | 
+ tab                   | boolean                     | 
+Indexes:
+    "documents_pkey" PRIMARY KEY, btree (id)
+    "idx_documents_created_at" btree (created_at)
+    "idx_documents_doctype" btree (doc_type)
+    "idx_documents_id_type_doctype" btree (documentable_id, documentable_type, doc_type)
+    "idx_documents_updated_at" btree (updated_at)
+    "index_documents_on_application_name" btree (application_name)
+    "index_documents_on_documentable_type" btree (documentable_type)
+    
+rocket2_v2_production=> select table_schema||'.'||TABLE_NAME TABLE_NAME,pg_size_pretty(pg_total_relation_size('"'||table_schema||'"."'||TABLE_NAME||'"')) total_size,
+pg_size_pretty(pg_table_size('"'||table_schema||'"."'||TABLE_NAME||'"')) data_size,
+pg_size_pretty(pg_indexes_size('"'||table_schema||'"."'||TABLE_NAME||'"')) index_size from information_schema.tables
+order by pg_total_relation_size('"'||table_schema||'"."'||TABLE_NAME||'"') desc
+limit 30;
+           table_name           | total_size | data_size | index_size 
+--------------------------------+------------+-----------+------------
+ public.pay_trans_info          | 568 GB     | 479 GB    | 89 GB
+ public.umpay_trans_info        | 238 GB     | 199 GB    | 39 GB
+ public.cash_flow_statements    | 144 GB     | 46 GB     | 98 GB
+ public.dues                    | 97 GB      | 19 GB     | 77 GB
+ public.users                   | 84 GB      | 21 GB     | 64 GB
+ public.account_transactions    | 68 GB      | 28 GB     | 40 GB
+ public.documents               | 64 GB      | 26 GB     | 37 GB
+ public.partner_request_logs    | 60 GB      | 57 GB     | 3381 MB
+ public.loan_applications       | 58 GB      | 23 GB     | 36 GB
+ public.user_repays             | 56 GB      | 14 GB     | 43 GB
+ public.clear_due               | 54 GB      | 17 GB     | 38 GB
+ public.due_settlements         | 45 GB      | 15 GB     | 30 GB
+ public.allinpay_transactions   | 43 GB      | 24 GB     | 19 GB
+ public.charge_dues             | 41 GB      | 13 GB     | 28 GB
+ public.application_attributes  | 37 GB      | 17 GB     | 20 GB
+ public.clear_due_settlement    | 34 GB      | 14 GB     | 20 GB
+ public.bank_cards              | 31 GB      | 19 GB     | 13 GB
+ public.file_ca_timestamp       | 31 GB      | 30 GB     | 952 MB
+ public.profiles                | 28 GB      | 7351 MB   | 21 GB
+ public.charge_dues_settlements | 27 GB      | 9971 MB   | 18 GB
+ public.yilian_transactions     | 26 GB      | 17 GB     | 9011 MB
+ public.addresses               | 26 GB      | 8535 MB   | 17 GB
+ public.repay_records           | 19 GB      | 17 GB     | 2149 MB
+ public.liaisons                | 19 GB      | 7531 MB   | 11 GB
+ public.profiles_checkmask      | 18 GB      | 5255 MB   | 13 GB
+ public.companies               | 18 GB      | 5967 MB   | 12 GB
+ public.user_repayment_task     | 18 GB      | 12 GB     | 6139 MB
+ public.device_infos            | 15 GB      | 7248 MB   | 8087 MB
+ public.tongbanjie_transactions | 15 GB      | 12 GB     | 3361 MB
+ public.weixin_trans_info       | 12 GB      | 4859 MB   | 7237 MB
+(30 rows)
+    

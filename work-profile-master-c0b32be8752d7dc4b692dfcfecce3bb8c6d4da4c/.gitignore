@@ -1,0 +1,7 @@
+.git
+.DS_Store
+.settings
+/*/.gitignore
+.project
+.idea
+*.iml

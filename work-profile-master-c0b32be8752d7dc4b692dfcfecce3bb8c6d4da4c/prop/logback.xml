@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+<!-- 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。 -->
+<!-- 详细可见官方文档https://logback.qos.ch/manual/ -->
+<configuration debug="true">
+	<!-- 目前这些变量在启动时由welab-common jar进行初始化 -->
+	<Property name="log.name" value="${app.id:-default}" />
+	<Property name="log.path" value="${log.path:-./data/logs}" />
+	<Property name="log.level" value="${log.level:-INFO}" />
+	<contextName>${log.name}</contextName>
+	<!--
+		--------------日志模板-------------------
+		%-5level: 打印日志级别，右填充空格至5个长度
+		contextName: 目前该值为应用appId
+		%d: 日期并进行相应格式化
+		%thread: 线程名称
+		%X{traceId}: mdc中变量，目前该值对应apm（调用链跟踪系统）中的tarceId
+		%logger: logger名称，大部分情况下logger是使用类名
+		%msg: 日志正文信息
+		%n: 换行
+	-->
+	<Property name="patternTemplate" value="[%-5level] [%contextName] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread][%X{traceId}] %logger - %msg%n" />
+	<jmxConfigurator />
+	<shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook" />
+	<!-- 控制台输出日志 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${patternTemplate}</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 文件输出日志 (文件大小策略进行文件输出，超过指定大小对文件备份) -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log.path}/${log.name}/${log.name}.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"><!-- rollover daily -->
+			<FileNamePattern>${log.path}/${log.name}-log-%d{yyyy-MM-dd}.%i.zip</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>15MB</maxFileSize><!-- or whenever the file size reaches 15MB -->
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!-- <maxHistory></maxHistory> -->
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${patternTemplate}</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 异步输出 -->
+	<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold>20</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>2048</queueSize>
+		<includeCallerData>true</includeCallerData>
+		<neverBlock>true</neverBlock>
+		<!-- 停应用时最多等待多少毫秒处理queue中日志,暂定10秒 -->
+		<maxFlushTime>10000</maxFlushTime>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref="FILE" />
+	</appender>
+
+	<!-- trace < debug < info < warn < error -->
+	<!-- 根logger的level和appender会被所有logger继承，所以根logger的level和appender比较重要 -->
+	<!-- level：如目前该值默认为info，会打印info、warn和error级别日志 -->
+	<!-- appender：(STDOUT打印至控制台、ASYNC异步打印至文件) -->
+	<root level="${log.level}">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ASYNC" />
+	</root>
+
+	<!-- 自定义logger的日志级别 -->
+	<!-- 没有设置日志级别，默认继承他的上级日志级别 -->
+	<!-- 没有设置addtivity，默认为true，将此loger的打印信息向上级传递 -->
+	<logger name="com.welab" additivity="true" level="info" />
+	<logger name="org.springframework.core.env" additivity="true" level="info" />
+	<logger name="org.springframework.beans.factory.support" additivity="true" level="info" />
+	<logger name="org.springframework.amqp.rabbit" additivity="true" level="info" />
+	<logger name="org.apache.ibatis.logging" additivity="true" level="info" />
+	<logger name="org.apache.tomcat.util.net" additivity="true" level="error" />
+	<logger name="com.ctrip.framework.apollo.util" additivity="true" level="error" />
+	<!-- 关闭dubbo协议日志的输出 -->
+	<logger name="com.alibaba.dubbo.rpc.protocol.dubbo" additivity="false" level="OFF" />
+	
+</configuration>

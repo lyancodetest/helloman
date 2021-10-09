@@ -1,0 +1,96 @@
+
+binding.created
+{destination_kind=queue, timestamp_in_ms=1557033760878, vhost=/, source_kind=exchange, destination_name=amq.gen-B6dR8lU0mMBUVKEQve_2XA, arguments=[], routing_key=*.*, source_name=amq.rabbitmq.event}
+
+consumer.created
+{timestamp_in_ms=1557033760898, vhost=/, prefetch_count=0, consumer_tag=amq.ctag-FtfFq5Zv2_9hCMkaynjHOA, channel=<rabbit@b0c87d8567c3.3.24826.17>, exclusive=false, arguments=[], ack_required=false, queue=amq.gen-B6dR8lU0mMBUVKEQve_2XA}
+
+connection.created
+{ssl_cipher=, pid=<rabbit@b0c87d8567c3.3.25131.17>, connected_at=1557033795895, type=network, ssl=false, timeout=60, frame_max=131072, protocol={0,9,1}, client_properties=[{<<"connection_name">>,longstr,<<"connectionFactory#6527f437:0">>}, {<<"product">>,longstr,<<"RabbitMQ">>}, {<<"copyright">>,longstr,<<"Copyright (c) 2007-2016 Pivotal Software, Inc.">>}, {<<"capabilities">>,table,[{<<"exchange_exchange_bindings">>,bool,true},{<<"connection.blocked">>,bool,true},{<<"authentication_failure_close">>,bool,true},{<<"basic.nack">>,bool,true},{<<"publisher_confirms">>,bool,true},{<<"consumer_cancel_notify">>,bool,true}]}, {<<"information">>,longstr,<<"Licensed under the MPL. See http://www.rabbitmq.com/">>}, {<<"version">>,longstr,<<"4.0.2">>}, {<<"platform">>,longstr,<<"Java">>}], host={0,0,0,0,0,65535,44049,3}, auth_mechanism=PLAIN, ssl_protocol=, peer_cert_subject=, ssl_key_exchange=, peer_cert_validity=, peer_port=51032, ssl_hash=, peer_cert_issuer=, timestamp_in_ms=1557033796299, vhost=/, channel_max=0, port=5672, peer_host={0,0,0,0,0,65535,2560,252}, name=10.0.0.252:51032 -> 172.17.0.3:5672, user=welend}
+
+channel.created
+{timestamp_in_ms=1557033796360, number=1, vhost=/, name=10.0.0.252:51032 -> 172.17.0.3:5672 (1), pid=<rabbit@b0c87d8567c3.3.25153.17>, connection=<rabbit@b0c87d8567c3.3.25131.17>, user=welend}
+
+binding.created
+{destination_kind=queue, timestamp_in_ms=1557033796650, vhost=/, source_kind=exchange, destination_name=welab.event.test.queue, arguments=[], routing_key=, source_name=welab.event.exchange}
+
+channel.created
+{timestamp_in_ms=1557033796912, number=2, vhost=/, name=10.0.0.252:51032 -> 172.17.0.3:5672 (2), pid=<rabbit@b0c87d8567c3.3.25158.17>, connection=<rabbit@b0c87d8567c3.3.25131.17>, user=welend}
+
+channel.created
+{timestamp_in_ms=1557033796973, number=3, vhost=/, name=10.0.0.252:51032 -> 172.17.0.3:5672 (3), pid=<rabbit@b0c87d8567c3.3.25162.17>, connection=<rabbit@b0c87d8567c3.3.25131.17>, user=welend}
+
+channel.created
+{timestamp_in_ms=1557033797387, number=4, vhost=/, name=10.0.0.252:51032 -> 172.17.0.3:5672 (4), pid=<rabbit@b0c87d8567c3.3.25167.17>, connection=<rabbit@b0c87d8567c3.3.25131.17>, user=welend}
+
+consumer.created
+{timestamp_in_ms=1557033797387, vhost=/, prefetch_count=1, consumer_tag=amq.ctag-4LwXilH4B4Fb2Q18RaFx7w, channel=<rabbit@b0c87d8567c3.3.25153.17>, exclusive=false, arguments=[], ack_required=true, queue=welab.event.test.queue}
+
+consumer.created
+{timestamp_in_ms=1557033797388, vhost=/, prefetch_count=1, consumer_tag=amq.ctag-daUUmzvPb1MW5SU5E_4ifA, channel=<rabbit@b0c87d8567c3.3.25158.17>, exclusive=false, arguments=[], ack_required=true, queue=welab.event.test.queue}
+
+consumer.created
+{timestamp_in_ms=1557033797577, vhost=/, prefetch_count=1, consumer_tag=amq.ctag-H3Aq7itEOZuNQJgAon5-gg, channel=<rabbit@b0c87d8567c3.3.25162.17>, exclusive=false, arguments=[], ack_required=true, queue=welab.event.test.queue}
+
+channel.created
+{timestamp_in_ms=1557033797577, number=5, vhost=/, name=10.0.0.252:51032 -> 172.17.0.3:5672 (5), pid=<rabbit@b0c87d8567c3.3.25171.17>, connection=<rabbit@b0c87d8567c3.3.25131.17>, user=welend}
+
+consumer.created
+{timestamp_in_ms=1557033797789, vhost=/, prefetch_count=1, consumer_tag=amq.ctag-oQ5lYHnRTea5yR7TkoVZqg, channel=<rabbit@b0c87d8567c3.3.25167.17>, exclusive=false, arguments=[], ack_required=true, queue=welab.event.test.queue}
+
+consumer.created
+{timestamp_in_ms=1557033797817, vhost=/, prefetch_count=1, consumer_tag=amq.ctag-_SVA5Fk4meu5CzpTnamElw, channel=<rabbit@b0c87d8567c3.3.25171.17>, exclusive=false, arguments=[], ack_required=true, queue=welab.event.test.queue}
+connection.closed
+{timestamp_in_ms=1557033901761, pid=<rabbit@b0c87d8567c3.3.25131.17>}
+
+consumer.deleted
+{timestamp_in_ms=1557033901761, vhost=/, consumer_tag=amq.ctag-oQ5lYHnRTea5yR7TkoVZqg, channel=<rabbit@b0c87d8567c3.3.25167.17>, queue=welab.event.test.queue}
+
+consumer.deleted
+{timestamp_in_ms=1557033901761, vhost=/, consumer_tag=amq.ctag-daUUmzvPb1MW5SU5E_4ifA, channel=<rabbit@b0c87d8567c3.3.25158.17>, queue=welab.event.test.queue}
+
+consumer.deleted
+{timestamp_in_ms=1557033901761, vhost=/, consumer_tag=amq.ctag-_SVA5Fk4meu5CzpTnamElw, channel=<rabbit@b0c87d8567c3.3.25171.17>, queue=welab.event.test.queue}
+
+consumer.deleted
+{timestamp_in_ms=1557033901761, vhost=/, consumer_tag=amq.ctag-H3Aq7itEOZuNQJgAon5-gg, channel=<rabbit@b0c87d8567c3.3.25162.17>, queue=welab.event.test.queue}
+
+consumer.deleted
+{timestamp_in_ms=1557033901761, vhost=/, consumer_tag=amq.ctag-4LwXilH4B4Fb2Q18RaFx7w, channel=<rabbit@b0c87d8567c3.3.25153.17>, queue=welab.event.test.queue}
+
+channel.closed
+{timestamp_in_ms=1557033901762, pid=<rabbit@b0c87d8567c3.3.25162.17>}
+
+channel.closed
+{timestamp_in_ms=1557033901762, pid=<rabbit@b0c87d8567c3.3.25153.17>}
+
+channel.closed
+{timestamp_in_ms=1557033901762, pid=<rabbit@b0c87d8567c3.3.25167.17>}
+
+channel.closed
+{timestamp_in_ms=1557033901762, pid=<rabbit@b0c87d8567c3.3.25158.17>}
+
+channel.closed
+{timestamp_in_ms=1557033901762, pid=<rabbit@b0c87d8567c3.3.25171.17>}
+
+connection.created
+{ssl_cipher=, pid=<rabbit@b0c87d8567c3.3.26151.17>, connected_at=1557033908534, type=network, ssl=false, timeout=60, frame_max=131072, protocol={0,9,1}, client_properties=[{<<"connection_name">>,longstr,<<"connectionFactory#5ac80d15:0">>}, {<<"product">>,longstr,<<"RabbitMQ">>}, {<<"copyright">>,longstr,<<"Copyright (c) 2007-2016 Pivotal Software, Inc.">>}, {<<"capabilities">>,table,[{<<"exchange_exchange_bindings">>,bool,true},{<<"connection.blocked">>,bool,true},{<<"authentication_failure_close">>,bool,true},{<<"basic.nack">>,bool,true},{<<"publisher_confirms">>,bool,true},{<<"consumer_cancel_notify">>,bool,true}]}, {<<"information">>,longstr,<<"Licensed under the MPL. See http://www.rabbitmq.com/">>}, {<<"version">>,longstr,<<"4.0.2">>}, {<<"platform">>,longstr,<<"Java">>}], host={0,0,0,0,0,65535,44049,3}, auth_mechanism=PLAIN, ssl_protocol=, peer_cert_subject=, ssl_key_exchange=, peer_cert_validity=, peer_port=51184, ssl_hash=, peer_cert_issuer=, timestamp_in_ms=1557033908901, vhost=/, channel_max=0, port=5672, peer_host={0,0,0,0,0,65535,2560,252}, name=10.0.0.252:51184 -> 172.17.0.3:5672, user=welend}
+
+channel.created
+{timestamp_in_ms=1557033908961, number=1, vhost=/, name=10.0.0.252:51184 -> 172.17.0.3:5672 (1), pid=<rabbit@b0c87d8567c3.3.26160.17>, connection=<rabbit@b0c87d8567c3.3.26151.17>, user=welend}
+
+consumer.created
+{timestamp_in_ms=1557033909095, vhost=/, prefetch_count=1, consumer_tag=amq.ctag-KfouZWXYu7fkdAehd7nJBQ, channel=<rabbit@b0c87d8567c3.3.26160.17>, exclusive=false, arguments=[], ack_required=true, queue=welab.event.test.queue}
+
+consumer.created
+{timestamp_in_ms=1557033909101, vhost=/, prefetch_count=1, consumer_tag=amq.ctag-audnvOR4cbGyg3tP70zLkw, channel=<rabbit@b0c87d8567c3.3.26167.17>, exclusive=false, arguments=[], ack_required=true, queue=welab.event.test.queue}
+
+consumer.created
+{timestamp_in_ms=1557033909176, vhost=/, prefetch_count=1, consumer_tag=amq.ctag-4GBItmuyiZ7Zrv_WVRF6oA, channel=<rabbit@b0c87d8567c3.3.26171.17>, exclusive=false, arguments=[], ack_required=true, queue=welab.event.test.queue}
+
+
+consumer.created
+{timestamp_in_ms=1557033909494, vhost=/, prefetch_count=1, consumer_tag=amq.ctag-YUTGm3q5A9p5UUmy-1cXYg, channel=<rabbit@b0c87d8567c3.3.26175.17>, exclusive=false, arguments=[], ack_required=true, queue=welab.event.test.queue}
+
+consumer.created
+{timestamp_in_ms=1557033909770, vhost=/, prefetch_count=1, consumer_tag=amq.ctag-wZZYbEQtp9pOqPSpZ_4ZCw, channel=<rabbit@b0c87d8567c3.3.26179.17>, exclusive=false, arguments=[], ack_required=true, queue=welab.event.test.queue}
